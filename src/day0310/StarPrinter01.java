@@ -17,7 +17,7 @@ public class StarPrinter01 {
         char[][] stars = new char[userNumber][userNumber];
         
         for(int i =0 ; i<stars.length; i++) {
-            for(int j=0; j <i; j++) {
+            for(int j=0; j <= i; j++) {
                 stars[i][j] = '*';
                 
             }

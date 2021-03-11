@@ -9,28 +9,23 @@ public class StarPrinter03 {
             System.out.println("출력할 줄 수를 입력해주세요.");
             int userNumber= scanner.nextInt();
             
-            //출력할 내용을 저장할 char[][]을 만들어보자
-            
-            //사용자가 5라고 입력하면?
-            //char가 5개 들어가는 배열이 5개 모인 2차열 배열이 된다.
-            
             char[][] stars = new char[userNumber][userNumber];
             
             for(int i =0 ; i<stars.length; i++) {
-                for(int j=0; j < userNumber; j++) {
-                    stars[i][j] = '*';
+                for(int j = 0; i <stars[i].length; i++) {
+                  //공백을 담당하는 if
+                   if(j <userNumber - (i+1)) {
+                       stars[i][j] =' ';
+                   }else {
+                     //별을 담당하는 else문
+                       stars[i][j]= '*';
+                   }
+                
+                
                     
                 }
             }
-            
-            for(int i =0; i<stars.length;i++) {
-                for(int j =i; j<stars[i].length; j++) {
-                    System.out.print(stars[i][j]);
-                }
-                System.out.println();
-            }
             scanner.close();
-
         }
 
     }
