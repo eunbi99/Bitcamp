@@ -9,17 +9,34 @@ package day0311;
  * 
  * 이렇게 파라미터를 다르게 해서 똑같은 이름의 메소드는 여러개 만들 수 있게 하는 것을 
  * 우리가 오버로딩(overloading)이라고 부른다.
- * 오버로딩의 목적은 같은 목표를 가지고 있는 메소드의 경우, 똑같은 이름으로 묶어서
+ * 오버로딩의 목적은 같은 목표를 가지고 있는 메소드의 경우, 똑  같은 이름으로 묶어서
  * 우리가 코드의 가독성을 높여주기 위함이다.
  * 
  *대표적으로 오버로딩이 되어있는 메소드가 바로
  *print(), println()이다.
  */
 public class Ex03Overload {
-
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-
+        System.out.println(plus(3,4));
+        System.out.println(plus(3.0,4.0));
+    }
+    
+    //int int에 대한 plus method
+    public static int plus(int number1 , int number2) {
+        System.out.println("int + int");
+        return number1 + number2;
+    }
+    
+    //아래코드는 에러가 발생
+//    public static int plus(int number1, int number2) {
+//        return number1+ number2;
+//    }
+//    
+    //double. double에 대한 plus method
+    public static double plus(double number1 , double number2) {
+        System.out.println("double + double");
+        return number1 + number2;
     }
 
 }
