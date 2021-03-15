@@ -1,26 +1,33 @@
-package day0311;
-
+package day0312;
+/*메소드 분리가 되어있는 로또 게임  */
 
 import java.util.Scanner;
+import util.ArrayUtil;
+import util.ScannerUtil;
+
 import java.util.Random;
-public class LottoGameAnswer {
+public class LottoGame01 {
         static final int NUMBER_MAX=45;
         static final int NUMBER_MIN=1;
         static final int NUMBER_SIZE =6;
         public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
-    //컴퓨터 숫자 추첨
-    //컴퓨터의 숫자를 저장할 int[] computerArray 만들기
+
         int[] computerArray = new int[NUMBER_SIZE];
         
-    //현재 computerArray의 몇번 인덱스에 값을 저장할지를 할당한 int변수 index
         int index = 0;
+    //index 변수의 할당된 값이 SIZE보다 작은 동안,
+    //While을 이용하여 computerArray의 index번 인덱스에 random이 생성한 숫자를
+    //기존 배열에 없을 때에만 추가하고 index의 값을 1 증가시킨다.
         while(index < NUMBER_SIZE) {
             int randomNumber = random.nextInt(NUMBER_MAX) +1;
-            
+            //만약 해당 randomNumber가 배열에 존재하지 않으면 true, 존재하면 false가 되는
+            //boolean inputSwitch =true;
             boolean inputSwitch =true ;
-            
+            //for문을 사용하여 , randomNumber의 값과 computerArray의 엘리먼트 중
+            //같은 값을 가진 엘리먼트가 있으면 inputSwitch를 false로 바꾸고
+            //for문을 break한다.
             for(int i = 0; i <computerArray.length; i++) {
                 if(randomNumber == computerArray[i]) {
                     inputSwitch =false;
@@ -28,19 +35,15 @@ public class LottoGameAnswer {
                 }
                 
             }
-            //만약 inputSwitch의 값이 true라는 것은
-            //randomNumber의 값이 , 중복이 아니라는 의미이므로
-            //computerArray의 index번 칸에
-            //randomNumber를 할당해준다.
             
             if(inputSwitch) {
                 computerArray[index] =randomNumber;
                 index ++;
+
             }
         }
     //사용자가 총 몇게임 할지 입력받는다.
-    System.out.println("몇번 플레이 하시겠습니까?");
-    int userGameSize = scanner.nextInt();
+    int userGameSize= ScannerUtil.nextInt(scanner, "총 몇게임을 하시겠습니까?");
     //사용자가 입력한 숫자를 토대로해서
     //2차원 배열을 만든다.
     int[][] userArrays = new int[userGameSize][NUMBER_SIZE];
@@ -50,24 +53,21 @@ public class LottoGameAnswer {
     for(int i =0 ; i< userArrays.length ; i++) {
         System.out.println();
         System.out.println("========="+ (i+1)+ "번 게임 ========");
-        System.out.println("1.수동 2.자동");
-        System.out.println(">");
-        int userChoice = scanner.nextInt();
+        int userChoice = ScannerUtil.nextInt(scanner, "1.수동  2.자동 ");
+
         //매 게임의 입력할 위치를 저장할 index의 값을 0으로 초기화 해준다.
         index =0;
         
         if(userChoice ==1) {
             //사용자로부터 중복되지 않은 1~45 사이의 숫자를 입력받아서
             //index가 각 게임의 배열의 크기보다 작은 동안
-            //index번 칸에 초기화해준다.
+            //idex번 칸에 초기화해준다.
             while (index < userArrays[i].length) {
                 //사용자한테 숫자를 선택 받아서
                 //1-45의 범위에 속하고 중복되지 않은 숫자인지 체크하여
                 //아닐경우에는 다시 입력해달라고 하자.
-                System.out.println((index+1)+"번 숫자를 입력해주세요");
-                System.out.println(">");
-                int userNumber =scanner.nextInt();
                 
+                int userNumber= ScannerUtil.nextInt(scanner, (index +1)+"번 숫자를 입력해주세요");
                 //해당 숫자가 유효한 범위에 속하고 중복되지 않은 숫자면 true
                 //그 외엔 false가 할당 되는 boolean 변수 inputSwitch
                 
@@ -76,7 +76,7 @@ public class LottoGameAnswer {
                 //사용자가 입력한 숫자가 1~45 범위 안에 속하는지를 
                 //비교연산자와 논리연산자를 사용하여
                 //그 결과값을 그대로 넣어주자/
-                boolean inputSwitch = userNumber >= NUMBER_MIN && userNumber <=NUMBER_MAX;
+                boolean inputSwitch = userNumber > NUMBER_MIN && userNumber <=NUMBER_MAX;
                 
                 //for문을 사용해서, userNumber와 중복되는 숫자가 있으면 inputSwitch의 값을 false로 바꾸고
                 //break해주자.
@@ -84,9 +84,10 @@ public class LottoGameAnswer {
                 for(int j =0; j<userArrays[i].length; j++) {
                     if(userNumber == userArrays[i][j]) {
                         inputSwitch = false;
-                        break;
+
                     }
                 }
+
                 
                 if(inputSwitch) {
                     userArrays[i][index] =userNumber;
@@ -95,8 +96,8 @@ public class LottoGameAnswer {
                     System.out.println("잘못된 숫자입니다.");
                     System.out.println("다시 입력해주세요.");
                 }
+               
             }
-            
         } else {
             // 사용자가 자동으로 골랐을 경우
             // 컴퓨터의 랜덤 숫자 코드와 매우 유사하지만
@@ -104,17 +105,27 @@ public class LottoGameAnswer {
             // userArrays[i][index] 로 바뀔 뿐이다.
 
             while (index < NUMBER_SIZE) {
+                // 랜덤한 숫자를 만들어준다.
                 int randomNumber = random.nextInt(NUMBER_MAX) + 1;
 
                 // 만약 해당 randomNumber가 배열에 존재하지 않으면 true, 존재하면 false가 되는
                 // boolean inputSwitch 를 만들고 true로 초기화해준다.
                 boolean inputSwitch = true;
+
+                // for 문을 사용하여, randomNumber의 값과 computerArray의 엘리먼트 중
+                // 같은 값을 가진 엘리먼트가 있으면 inputSwitch를 false로 바꾸고
+                // for 문을 break한다.
                 for (int j = 0; j < userArrays[i].length; j++) {
                     if (randomNumber == userArrays[i][j]) {
                         inputSwitch = false;
                         break;
                     }
                 }
+
+                // 만약 inputSwitch의 값이 true라는 것은
+                // randomNumber의 값이, 중복이 아니라는 의미이므로
+                // userArrays[i]의 index번 칸에
+                // randomNumber를 할당해준다.
 
                 if (inputSwitch) {
                     userArrays[i][index] = randomNumber;
@@ -160,6 +171,9 @@ public class LottoGameAnswer {
     //  의 형식으로 출력해준다
     
     for(int i = 0 ; i < userArrays.length; i++) {
+        //1.등수를 위하여, 사용자의 i번째 배열의 값과
+        // computer의 숫자를 비교하여, 몇개나 일치하는지
+        // 갯수를 센다.
         
         int count=0;
         for(int j =0; j< userArrays[i].length; j++) {
