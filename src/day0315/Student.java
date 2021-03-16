@@ -65,11 +65,12 @@ public class Student {
  */
 public class Student {
     //필요한 데이터의 종류를 여기에 적는다.
-     int id;
-     String name;
-     int korean;
-     int english;
-     int math;
+     public int id;
+     public String name;
+     public int korean;
+     public int english;
+     public int math;
+     private final int SIZE = 3;
      
      //우리가 객체의 메소드는 static을 써주지 않는다.
      //왜냐하면 , 해당 메소드는 반드시 우리가 
@@ -82,7 +83,7 @@ public class Student {
      }
      
      public double calculateAverage() {
-         return calculateSum() /3.0;
+         return calculateSum() / (double)SIZE;
      }
      
      public void showInfo() {
