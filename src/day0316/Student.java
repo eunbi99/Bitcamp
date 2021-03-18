@@ -118,13 +118,10 @@ package day0316;
          //오버라이드 메소드
          //1.equals
          public boolean equals(Object o) {
-           
-             if(o instanceof Student) {
-                
+             if(o instanceof Student) {                
                  Student s = (Student)o;
-                 
-                
-                 if(id == s.id && name.equals(s.name)) {
+
+                 if(id == s.id ) {
                      return true;
                  }
              }

@@ -36,20 +36,45 @@ public class ScannerUtil {
             return str;
             
         }
+        //사용자로부터 nextInt()를 실행할때 곧장 int로 입력받는것이 아니라
+        //String으로 입력을 받고, 해당 String 값이 숫자로만 이루어져있는지 체크하여
+        //만약 숫자 외의 글자가 존재 할 시에는 "숫자만 입력해주세요" 라는 메시지와 함께
+        //계속 입력을 받게 해준다.
+        //만약 사용자가 숫자만 입력하면
+        //Integer 클래스의 static 메소드인 parseInt()메소드를 호출하여
+        //String을 int로 변환해준다.
+    
         
         //사용자로부터 숫자값을 입력받는
         //nextInt() 메소드
         public static int nextInt(Scanner scanner, String message) {
-            System.out.println(message);
-            System.out.println(">");
-            return scanner.nextInt();
+            //1. 먼저 사용자로부터 값을 String의 형태로 입력받는다.
+            String temp = nextLine(scanner, message);
+            
+            //2.temp가 숫자로만 이루어져있는지 체크해서, 아닐경우엔
+            //  숫자만 입력될때 까지 다시 입력받는다.
+            while( !temp.matches("\\d+")) {
+                System.out.println("잘못 입력하셨습니다.");
+                System.out.println("숫자만 입력하실수 있습니다.");
+                temp = nextLine(scanner,message);
+                
+            }
+            //3.while이 종료되었다는 의미는
+            //  temp가 숫자로만 이루어져있다 라는 의미이므로
+            //  Integer.parseInt()를 통해서
+            //  String temp의 값을 int타입의 값으로 바꿔준다.
+            //  그리고 해당 int값을 return 해준다.
+            return Integer.parseInt(temp);
         }
         //사용자로부터 특정 범위내의 숫자값을 입력받는
         //nextInt() 메소드
         public static int nextInt(Scanner scanner, String message , int min , int max) {
-            int number =nextInt(scanner, message);
+            String temp = nextLine(scanner, message);
+            
+            while(!temp.matches("\\d+")) {
+                System.out.println("잘못 입력하셨습니다.");
+            }
        
-
             while(!(number >= min && number <=max)) {
                 System.out.println("잘못 입력하셨습니다.");
                 System.out.println(message);

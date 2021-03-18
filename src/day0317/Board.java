@@ -1,5 +1,7 @@
 package day0317;
 
+import day0310.board01;
+
 public class Board {
     private int id;
     private String title;
@@ -36,7 +38,7 @@ public class Board {
     public boolean equals(Object o) {
         if(o instanceof Board) {
             Board b= (Board)o;
-            if(title.equals(b.title)) {
+            if(id == b.id) {
                 return true;
             }
         }
