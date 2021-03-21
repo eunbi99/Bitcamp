@@ -91,7 +91,7 @@ public class Board {
         //이 print메소드에 파라미터로 넘겨주어야한다.
         //System.out.printf(" 작성자 : %s \n" ,writer);
         System.out.printf(" 작성자 : %s \n" ,writerName);
-        System.out.printf("작성일 %s \t수정일 : %s\n",sdf.format(writtenDate.getTime()));
+        System.out.printf("작성일 %s \n",sdf.format(writtenDate.getTime()));
         System.out.printf("수정일 ㅣ %s\n", sdf.format(updateDate.getTime()));
         System.out.println("-------------------------------------------");
         System.out.println("                    내용                                             ");

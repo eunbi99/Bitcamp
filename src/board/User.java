@@ -48,5 +48,12 @@ public class User {
         return false;
     }
 
-    //사용자로부터 넘겨받은 userName과 
+    //사용자로부터 넘겨받은 userName과 password가 일치하면 true가 리턴되는
+    //logIn 메소드
+    public boolean logIn(User u) {
+        if(userName.equals(u.userName) && password.equals(u.password)) {
+            return true;
+        }
+        return false;
+    }
 }
