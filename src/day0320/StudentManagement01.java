@@ -404,11 +404,15 @@ public class StudentManagement01 {
                 userChoice = ScannerUtil.nextInt(scanner, message, 1, 4);
                 if (userChoice == 1) {
                     // 전체 학생을 보는 메소드 실행
-                    printAll();
+                    printAll(groupStudents);
                 } else if (userChoice == 2) {
                     // 성적이 등록되지 않은 학생만 보는 메소드 실행
+                    ArrayList<Student> list = null;
+                    printAll(list);
+                    
                 } else if (userChoice == 3) {
                     // 평가를 보여주는 메소드 실행
+
                 } else if (userChoice == 4) {
                     System.out.println("인덱스 화면으로 돌아갑니다.");
                     break;
@@ -419,7 +423,7 @@ public class StudentManagement01 {
                 userChoice = ScannerUtil.nextInt(scanner, message, 1, 3);
                 if (userChoice == 1) {
                     // 전체 학생을 보는 메소드 실행
-                    printAll();
+                    printAll(groupStudents);
                 } else if (userChoice == 2) {
                     // 평가를 보여주는 메소드 실행
                 } else if (userChoice == 3) {
@@ -454,12 +458,19 @@ public class StudentManagement01 {
 
  
     // 3-2-1,3-3-1. 전체 학생을 보는 메소드
-    private static void printAll() {
+    private static void printAll(ArrayList<Student> list) {
         while (true) {
+            if(list == null) {
+                //list가 null이란 것이느
+                //우리가 성적 입력 안된 학생리스트를 보겠다고 선택한 상황이기 때문에
+                //리스트에 selectByInputSwitch()를 실행한 결과값을 할당해주면 된다.
+                
+                list = selectByInputSwitch();
+            }
             // 지금 현재 소속반의 리스트를 for 문을 이용하여 전부 출력한 후에
             // 개별 보기, 뒤로 가기 를 한다.
             // 단, for 문으로 출력시 성적이 입력되었는지를 따로 표시해준다.
-            for (Student s : groupStudents) {
+            for (Student s : list) {
                 String inputMark = new String();
                 if (!s.isScoreInputSwitch()) {
                     inputMark = new String("X");
@@ -481,7 +492,7 @@ public class StudentManagement01 {
 
             // 2-2. 사용자가 0을 입력하거나 혹은 유효한 번호를 입력했을 두 경우가 모두 아닐 경우, 다시 입력을 받는다.
             // 유효한 번호란, 해당 소속 반에 속한 학생의 번호와 일치하는 것이 존재하는 경우이다.
-            while (!(userChoice == 0 || groupStudents.contains(s))) {
+            while (!(userChoice == 0 || list.contains(s))) {
                 System.out.println("잘못 입력하셨습니다.");
                 userChoice = ScannerUtil.nextInt(scanner, message);
                 s.setId(userChoice);
@@ -496,6 +507,15 @@ public class StudentManagement01 {
             } else {
                 // 개별 보기 하는 메소드를 실행한다.
                 printOne(userChoice);
+            }
+            
+            //4.파라미터 list와 전역변수 groupStudents를 비교하여
+            //둘이 같지 않은 경우, list에 selectByInputSwitch() 를 다시 실행해준다.
+            //그렇게 할 경우, 만약 우리가 성적 입력 안된 학생 리스트를 뽑아 왔었는데
+            //만약 성적 입력을 해줄 경우, 새로운 리스트를 불러와서 뽑아와야 하기 때문이다.
+            if(list != groupStudents) {
+                list = selectByInputSwitch();
+                
             }
         }
     }
@@ -595,17 +615,30 @@ public class StudentManagement01 {
         return null;
     }
 
-
+    //
+    private static void showNotGraded() {
+        //아래에 성적입력이 아직 안된 학생 리스트를 뽑아주는 메소드를 
+        //사용해서 리스트를 받아온다
+        ArrayList<Student> list = selectByInputSwitch();
+        //무한 루프를 안에서 성적 입력이 안된 학생들의 목록을 뽑아준다
+        while(true) {
+            for(Student s : list) {
+                System.out.printf("%d번. %s %s\n",s.getId(),s.getName());
+            }
+        }
+    }
     // 성적 입력이 아직 안된 학생을 리스트로 뽑아주는 메소드
     private static ArrayList<Student> selectByInputSwitch() {
         ArrayList<Student> list = new ArrayList<>();
-        for (Student s : LIST_STUDENT) {
+        for (Student s : groupStudents) {
             if (!s.isScoreInputSwitch()) {
                 list.add(s);
             }
-        }
+        }   
 
         return list;
+        
     }
 
+    
 }
