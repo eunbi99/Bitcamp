@@ -57,6 +57,10 @@ public class TeacherViewer {
         controller.add(t);
         
     }
+    //파라미터와 group의 값이 같은 TeacherDTO 객체를 리턴해주는 메소드
+    public TeacherDTO selectOneByGroup(int group) {
+       return controller.selectOneByGroup(group);
+    }
     
     //로그인 담당 메소드
     public int logIn() {

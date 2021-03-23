@@ -134,14 +134,18 @@ public class StudentController {
     // 8. 사용자가 넘겨준 group과 일치하는 객체들 중에서 아직 성적 입력이 안된 객체들만 뽑아내는
     // selectByInputSwitch()
     public ArrayList<StudentDTO> selectByInputSwitch(int group) {
+        //전체 목록을 담은 list
         ArrayList<StudentDTO> list = selectByGroup(group);
 
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).isInputSwitch()) {
-                list.remove(i);
+        //list에서 switch가 false인 것을 담을 temp
+        ArrayList<StudentDTO> result = new ArrayList<>();
+        
+        for (StudentDTO s : list) {
+            if(!s.isInputSwitch()) {
+                result.add(s);
             }
         }
 
-        return list;
+        return result;
     }
 }

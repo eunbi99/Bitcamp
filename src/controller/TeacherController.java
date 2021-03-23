@@ -102,6 +102,17 @@ public class TeacherController {
         return null;
     }
     
+    //6. 사용자가 파라미터로 넘겨준 int값과 일치하는 group을 가진
+    //      TeacherDTO를 리턴해주는 selectOneByGroup 메소드
+    public TeacherDTO selectOneByGroup(int group) {
+        for(TeacherDTO t : list) {
+            if(t.getGroup() == group) {
+                return t;
+            }
+        }
+        return null;
+    }
+    
  
 }
 

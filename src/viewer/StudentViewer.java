@@ -130,17 +130,24 @@ public class StudentViewer {
     // 생각하면
     // 된다.
     public void printList(int group, int type) {
-        ArrayList<StudentDTO> list;
-        if(logIn !=null) {
-            list = controller.selectByGroup(logIn.getGroup());
-        }else {
-            if(type == VALUE_ALL) {
-                list=controller.selectByGroup(group);
-            }else {
-                list =controller.selectByInputSwitch(group);
-            }
-        }
         while(true) {
+            //3-1.출력할 목록을 컨트롤러를 통해서 불러온다.
+            ArrayList<StudentDTO> list = new ArrayList<>();
+            
+            if(logIn !=null) {
+                list = controller.selectByGroup(logIn.getGroup());
+            }else {
+                if(type == VALUE_ALL) {
+                    list=controller.selectByGroup(group);
+                }else if(type == VALUE_NO_INPUT) {
+                    list =controller.selectByInputSwitch(group);
+                }
+            }
+            if(list.isEmpty()) {
+                System.out.println("출력할 학생이 존재하지 않습니다.");
+                break;
+            }
+            
         // 3-1. 목록을 보여준다.
         System.out.println("번호\t이름\t성적 입력 여부");
 
@@ -184,11 +191,12 @@ public class StudentViewer {
         StudentDTO s = controller.selectOne(id);
         System.out.printf("번호 : %2d번 이름 : %s\n", s.getId(), s.getName());
         System.out.printf("반 : %2d반\n",s.getGroup());
+        //점수 입력이 true라면
         if(s.isInputSwitch()) {
             int sum = s.getEnglish() + s.getKorean() + s.getMath();
             double average = sum/(double)SUBJECT_SIZE;
             System.out.printf("국어 : %03d점 영어 : %03d점 수학 : %03d점 \n",s.getKorean(),s.getEnglish(),s.getMath());
-            System.out.println("총점 : %03d점 평균 : %06.2f점\n.sum,average");
+            System.out.printf("총점 : %03d점 평균 : %06.2f점\n",sum,average);
         }else {
             System.out.println("아직 입력된 성적이 존재하지 않습니다.");
         }
@@ -242,7 +250,29 @@ public class StudentViewer {
         message = new String("수학 점수를 입력해주세요.");
         s.setMath(ScannerUtil.nextInt(scanner, message,SCORE_MIN,SCORE_MAX));
         
+        s.setInputSwitch(true);
         controller.update(s);
+    }
+    
+    //뷰어의 필드인 컨트롤러에서 해당 학생의 이름을 리턴해주는 메소드
+    public StudentDTO selectNameById(int id) {
+        return controller.selectOne(id);
+
+    }
+    
+    //현재 로그인한 객체의 id를 리턴해주는 메소드
+    public int selectLogIn() {
+        return logIn.getId();
+    }
+    
+    //현재 로그인한 객체가 null이면 true, null이 아니면 false가 리턴되는 메소드
+    public boolean isLoginNull() {
+        return logIn==null;
+    }
+    
+    //현재 로그인 객체의 group을 리턴해주는 메소드
+    public int selectGroup() {
+        return logIn.getGroup();
     }
 
 }
